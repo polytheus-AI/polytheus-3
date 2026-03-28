@@ -1,0 +1,58 @@
+services:
+  db:
+    image: postgres:18-alpine
+    container_name: polytheus-db
+    environment:
+      POSTGRES_USER: polytheus
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: polytheus_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U polytheus -d polytheus_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  cache:
+    image: redis:8-alpine
+    container_name: polytheus-cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+  app-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: polytheus-app-dev
+    ports:
+      - "7497:7497"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      DATABASE_URL: postgres://polytheus:password123@db:5432/polytheus_db
+      REDIS_URL: redis://cache:6379
+      JWT_SECRET: super_secret_polytheus_key
+      PORT: 7497
+      NODE_ENV: development
+      WATCHPACK_POLLING: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:

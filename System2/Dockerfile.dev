@@ -1,0 +1,17 @@
+# use the official Bun image
+FROM oven/bun:canary-alpine
+
+WORKDIR /usr/src/app
+
+# Install dependencies
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
+
+# We don't COPY the source code here because we'll mount it as a volume
+# in docker-compose for hot reloading.
+
+# Expose the port
+EXPOSE 7497/tcp
+
+# Run the app in dev mode with hot reloading
+CMD [ "bun", "run", "dev" ]

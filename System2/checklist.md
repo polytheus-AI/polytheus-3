@@ -1,0 +1,54 @@
+# Outils
+- echaffaudage
+- IA
+- IA centrale
+- algo > IA
+- UI
+- chaine d'outils
+- retour chaine d'outils utile
+- prompt
+- agent
+- soul
+- design
+- preference
+- theme
+- user
+- mémoire conceptuelle
+- n_message
+- tous les n_message la mémoire conceptuelle est vider
+- information
+- best_AI
+- notepad
+- privacy
+- safe
+- friend
+- verify
+- tools
+- variable
+- requete
+- w_max
+- n_min
+- t_max_req
+- rl_rate
+- dt_expiration
+- dt_increment
+- t_cleanup
+- n_message
+- I_max
+- n_try
+- logs
+- error_logs
+- tool_logs
+- supprimer tous les t_cleanup
+
+
+# Systemes 2
+- solde
+- statut
+- abonnement
+- p_forfait
+- auto_buy_qt
+- p_name
+- p_token
+- MDP
+- sel

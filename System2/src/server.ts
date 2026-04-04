@@ -1,4 +1,4 @@
-import homepage from "./index.html";
+import homepage from "./tools/HTML/Homepage.html";
 import { join } from "path";
 
 const server = Bun.serve({

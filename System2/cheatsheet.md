@@ -19,3 +19,18 @@ Pour détruire l'infrastructure de développement :
 docker compose down --rmi all
 ```
 
+Pour avoir accès aux logs d'un service: 
+```bash
+docker compose logs -f <service_name>
+```
+
+Exemple (avoir accès aux logs de l'application web): 
+```bash
+docker compose logs -f app-dev
+```
+
+pour avoir accès aux logs de tous les services: 
+```bash
+docker compose logs -f
+```
+

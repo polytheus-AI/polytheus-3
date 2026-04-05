@@ -89,7 +89,7 @@ header {
     color: var(--text-primary)
 }
 
-.avatar-container {
+.avatar-btn {
     width: 80px;
     height: 80px;
     border-radius: 50%;
@@ -101,7 +101,7 @@ header {
     background-color: black;
 }
 
-.avatar-container:hover {
+.avatar-btn:hover {
     transform: scale(1.05);
     cursor: pointer;
 }
@@ -182,11 +182,7 @@ header {
 
 /* Responsiveness */
 @media (max-width: 600px) {
-    .top-bar {
-        padding: 16px 20px;
-    }
-    
-    .avatar-container {
+    .avatar-btn {
         width: 60px;
         height: 60px;
     }

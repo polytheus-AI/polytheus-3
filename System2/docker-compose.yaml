@@ -41,6 +41,7 @@ services:
       - "7497:7497"
     volumes:
       - .:/usr/src/app
+      - ../System1:/usr/src/System1
       - /usr/src/app/node_modules
     environment:
       DATABASE_URL: postgres://polytheus:password123@db:5433/polytheus_db

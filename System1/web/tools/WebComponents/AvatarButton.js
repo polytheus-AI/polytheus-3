@@ -121,11 +121,31 @@ class AvatarButton extends HTMLElement {
         }, 60000));
     }
 
+    OwlThinking(){
+        
+    }
+
+    showLoginBubble() {
+        const bubble = this.shadowRoot.querySelector('.login-bubble');
+        if (bubble) {
+            bubble.classList.add('show');
+            // Automatically hide after 8 seconds if not interacted with
+            setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 8000);
+        }
+    }
+
     setupEventListeners() {
         const avatarBtn = this.querySelector(".avatar-btn");
         if (!avatarBtn) return;
 
         let hasPlayedOnHover = false;
+
+        // Listen for prompt submission
+        window.addEventListener('polytheus-prompt-submit', () => {
+            this.showLoginBubble();
+        });
 
         avatarBtn.addEventListener("mouseenter", () => {
             if (hasPlayedOnHover) return;
@@ -142,12 +162,97 @@ class AvatarButton extends HTMLElement {
         });
 
         avatarBtn.addEventListener("click", () => {
-            // Placeholder for click logic
+            this.OwlThinking();
         });
     }
 
     render() {
         this.shadowRoot.innerHTML = `      
+            <style>
+                :host {
+                    position: relative;
+                    display: inline-block;
+                }
+
+                .login-bubble {
+                    position: absolute;
+                    right: 120%;
+                    top: 50%;
+                    transform: translateY(-50%) translateX(20px);
+                    background: rgba(20, 20, 20, 0.7);
+                    backdrop-filter: blur(12px);
+                    -webkit-backdrop-filter: blur(12px);
+                    border: 1.5px solid var(--accent-yellow, #FFFF00);
+                    border-radius: 16px;
+                    padding: 12px 20px;
+                    color: white;
+                    font-family: 'Noto Sans', sans-serif;
+                    font-size: 0.95rem;
+                    font-weight: 500;
+                    white-space: nowrap;
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 0, 0.2);
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    z-index: 1000;
+                }
+
+                .login-bubble::after {
+                    content: '';
+                    position: absolute;
+                    left: 100%;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    border-width: 10px;
+                    border-style: solid;
+                    border-color: transparent transparent transparent var(--accent-yellow, #FFFF00);
+                }
+
+                .login-bubble.show {
+                    opacity: 1;
+                    transform: translateY(-50%) translateX(0);
+                    pointer-events: auto;
+                }
+
+                .login-link {
+                    color: var(--accent-yellow, #FFFF00);
+                    text-decoration: none;
+                    font-weight: 700;
+                    border-bottom: 2px solid transparent;
+                    transition: border-color 0.2s;
+                }
+
+                .login-link:hover {
+                    border-color: var(--accent-yellow, #FFFF00);
+                }
+
+                @media (max-width: 600px) {
+                    .login-bubble {
+                        right: -5px;
+                        top: 110%;
+                        transform: translateY(-10px);
+                        white-space: normal;
+                        width: 220px;
+                        text-align: center;
+                    }
+                    .login-bubble::after {
+                        left: auto;
+                        right: 25px;
+                        top: -19px;
+                        transform: none;
+                        border-color: transparent transparent var(--accent-yellow, #FFFF00) transparent;
+                    }
+                    .login-bubble.show {
+                        transform: translateY(0);
+                    }
+                }
+            </style>
+            <div class="login-bubble">
+                <span>Please <a href="/login" class="login-link">log in</a> for speaking with Polytheus</span>
+            </div>
             <slot></slot>
         `;
     }

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--<link rel="stylesheet" href="../CSS/Homepage.css">-->
-    <script src="../JS/Homepage.js" defer></script>
     <meta name="keywords" content="AI, Evolutionary software, Evolutionary algorithms, Universal software, Self-improving software, best IA, Multi agent system">
     <meta name="description" content="Polytheus is a universal software application based on a multi-agent system that combines the best AI, algorithms, and data to enable anyone to access any webpage on the fly.">
     <link rel="icon" type="image/png" href="../Images/favicon/favicon-96x96.png" sizes="96x96" />
@@ -15,216 +14,11 @@
     <script src="../WebComponents/GearButton.js" defer></script>
     <script src="../WebComponents/TokenButton.js" defer></script>
     <script src="../WebComponents/AvatarButton.js" defer></script>
+    <script src="../WebComponents/MainSection.js" defer></script>
+    <script src="../WebComponents/PromptBar.js" defer></script>
+    <link rel="stylesheet" href="../CSS/Homepage.css">
     <title>Polytheus: The Universal Software</title>
 </head>
-<style>
-    :root {
-        --bg-color: #000000;
-        --accent-yellow: #FFFF00;
-        --text-primary: #FFFFFF;
-        --text-secondary: #888888;
-        --input-bg: #1A1A1A;
-        --btn-bg: #222222;
-        --border-radius-sm: 8px;
-        --border-radius-md: 12px;
-        --border-radius-lg: 20px;
-        --border-radius-xl: 40px;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        background-color: var(--bg-color);
-        color: var(--text-primary);
-        font-family: 'Noto Sans', sans-serif;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-    }
-
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 24px 32px;
-    }
-
-    .top-left {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .gear-btn {
-        background: var(--btn-bg);
-        border: 1px solid #333;
-        border-radius: var(--border-radius-md);
-        padding: 10px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: transform 0.2s ease, background 0.2s ease;
-    }
-
-    .gear-btn:hover {
-        background: #333;
-        transform: scale(1.05);
-    }
-
-    .gear-img {
-        transition: transform 1s ease;
-        width: 24px;
-        height: 24px;
-    }
-
-    .gear-img.rotated {
-        transform: rotate(180deg);
-    }
-
-    .token-btn {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        border: 1.5px solid var(--accent-yellow);
-        border-radius: var(--border-radius-lg);
-        padding: 10px 20px;
-        background: rgba(255, 255, 0, 0.05);
-    }
-
-    .token-btn:hover {
-        background: rgba(255, 255, 0, 0.1);
-        transform: scale(1.05);
-        cursor: pointer;
-    }
-
-    .token-btn .icon {
-        width: 35px;
-        height: 24px;
-    }
-
-    .token-btn .count {
-        font-weight: 700;
-        font-size: 1.25rem;
-        color: var(--text-primary)
-    }
-
-    .avatar-btn {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        border: 3px solid var(--accent-yellow);
-        padding: 3px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: black;
-    }
-
-    .avatar-btn:hover {
-        transform: scale(1.05);
-        cursor: pointer;
-    }
-
-    .avatar-img {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        object-fit: cover;
-    }
-
-    /* main Section Styling */
-    .main-section {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding-bottom: 5vh;
-    }
-
-    .main-title {
-        color: var(--accent-yellow);
-        font-size: clamp(2.5rem, 8vw, 4.5rem);
-        font-weight: 900;
-        letter-spacing: 2px;
-        margin-bottom: 12px;
-    }
-
-    .main-subtitle {
-        color: var(--text-secondary);
-        font-size: clamp(0.9rem, 2vw, 1.1rem);
-        font-weight: 500;
-        opacity: 1;
-        transform: translateY(0);
-        transition: opacity 0.6s ease;
-    }
-
-    .main-subtitle.fade-out {
-        opacity: 0;
-        
-    }
-
-    /* Input Bar Styling */
-    .input-container {
-        display: flex;
-        justify-content: center;
-        padding: 0 20px 60px 20px;
-    }
-
-    .search-bar {
-        width: 100%;
-        max-width: 800px;
-    }
-
-    .search-bar input {
-        width: 100%;
-        background-color: var(--input-bg);
-        border: 1px solid #222;
-        border-radius: var(--border-radius-xl);
-        padding: 22px 32px;
-        color: var(--text-primary);
-        font-size: 1.1rem;
-        outline: none;
-        transition: border-color 0.3s ease, background-color 0.3s ease;
-    }
-
-    .search-bar input:focus {
-        border-color: #ffffff;
-        background-color: #222;
-    }
-
-    .search-bar input::placeholder {
-        color: #555;
-        font-weight: 500;
-    }
-
-    /* Responsiveness */
-    @media (max-width: 600px) {
-        .avatar-btn {
-            width: 60px;
-            height: 60px;
-        }
-        
-        .token-btn {
-            padding: 4px 12px;
-        }
-        
-        .token-btn .count {
-            font-size: 1.1rem;
-        }
-
-        .main-section {
-            padding-bottom: 10vh;
-        }
-    }
-</style>
 <body>
     <header>
         <div class="top-left">
@@ -257,8 +51,32 @@
     <footer class="input-container">
         <prompt-bar class="search-bar">
             <input type="text" placeholder="What did you want ?" id="search-input">
+            <button class="send-btn">
+                <img src="../Images/paper-plane.svg" alt="Send" class="send-img">
+            </button>
         </prompt-bar>
     </footer>
+    <script type="module">
+        const APP_VERSION = await fetch("/app_version")
+            .then(response => response.text());
 
+        console.log(APP_VERSION);
+
+        const savedVersion = localStorage.getItem("app_version");
+
+        if (savedVersion !== APP_VERSION) {
+            console.log("Nouvelle version ou première visite");
+
+            const script = document.createElement("script");
+            script.src = "../JS/Onboarding.js";
+            script.type = "module";
+
+            document.head.appendChild(script);
+
+            localStorage.setItem("app_version", APP_VERSION);
+        } else {
+            console.log("Version actuelle");
+        }
+    </script>
 </body>
 </html>

@@ -5,6 +5,9 @@ const WEB_DIR = join(import.meta.dir, "../../System1/web/tools");
 const server = Bun.serve({
     port: 7497,
     hostname: "0.0.0.0",
+    routes: {
+        "/app_version": () => new Response("1.0"),
+    },
     async fetch(req) {
         const url = new URL(req.url);
         let path = url.pathname;

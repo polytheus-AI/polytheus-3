@@ -5,9 +5,7 @@ class Memory {
      */
     static Onboarding(){
         this.createTypeOfTool(["CSS", "HTML", "JavaScript"]);
-        setTimeout(() => {
-            this.deleteTypeOfTool(["CSS", "HTML", "JavaScript"]);
-        }, 1000);
+        
     }
 
     /*

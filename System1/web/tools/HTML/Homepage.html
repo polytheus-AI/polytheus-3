@@ -57,25 +57,33 @@
         </prompt-bar>
     </footer>
     <script type="module">
-        const APP_VERSION = await fetch("/app_version")
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("../JS/ServiceWorker.js")
+                    .then(reg => console.log("SW Registered", reg.scope))
+                    .catch(err => console.log("SW Registration Failed", err));
+            });
+        } else {
+             const APP_VERSION = await fetch("/app_version")
             .then(response => response.text());
 
-        console.log(APP_VERSION);
+            console.log(APP_VERSION);
 
-        const savedVersion = localStorage.getItem("app_version");
+            const savedVersion = localStorage.getItem("app_version");
 
-        if (savedVersion !== APP_VERSION) {
-            console.log("Nouvelle version ou première visite");
+            if (savedVersion !== APP_VERSION) {
+                console.log("Nouvelle version ou première visite");
 
-            const script = document.createElement("script");
-            script.src = "../JS/Onboarding.js";
-            script.type = "module";
+                const script = document.createElement("script");
+                script.src = "../JS/Onboarding.js";
+                script.type = "module";
 
-            document.head.appendChild(script);
+                document.head.appendChild(script);
 
-            localStorage.setItem("app_version", APP_VERSION);
-        } else {
-            console.log("Version actuelle");
+                localStorage.setItem("app_version", APP_VERSION);
+            } else {
+                console.log("Version actuelle");
+            }
         }
     </script>
 </body>
